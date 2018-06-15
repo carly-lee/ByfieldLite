@@ -67,3 +67,6 @@ yarn.lock
 yarn-error.log
 
 .buckconfig
+.project
+org.eclipse.buildship.core.prefs
+.classpath

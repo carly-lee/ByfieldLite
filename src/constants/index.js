@@ -4,3 +4,8 @@ export const SCREEN_TYPE = {
   CONFIRM: 'screen.confirm',
 };
 
+export const FONT = {
+  REGULAR: 'FiraSans-Regular',
+  MEDIUM: 'FiraSans-Medium',
+  BOLD: 'FiraSans-Bold',
+};

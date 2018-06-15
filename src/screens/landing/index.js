@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { View, Text, Button } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
-import { SCREEN_TYPE } from 'constants';
+import { SCREEN_TYPE, FONT } from 'constants';
 import styles from './styles';
 
 class Landing extends PureComponent {
@@ -17,7 +17,7 @@ class Landing extends PureComponent {
   render(){
     return(
       <View style={styles.container}>
-        <Text>Landing</Text>
+        <Text style={{ fontFamily: FONT.BOLD }}>Landing</Text>
         <Button onPress={() => {
           Navigation.push(this.props.componentId, {
             component: {
