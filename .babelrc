@@ -1,0 +1,20 @@
+{
+  "presets": ["react-native"],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./src"],
+      "extensions": [".js"],
+      "alias": {
+        "screens": "./src/screens",
+        "actions": "./src/actions",
+        "reducers": "./src/reducers",
+        "store": "./src/stores",
+        "components": "./src/components",
+        "constants" : "./src/constants",
+        "utils": "./src/utils",
+        "ui": "./src/ui",
+        "images": "./images"
+      }
+    }]
+  ]
+}
