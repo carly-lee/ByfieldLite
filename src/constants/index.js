@@ -9,3 +9,9 @@ export const FONT = {
   MEDIUM: 'FiraSans-Medium',
   BOLD: 'FiraSans-Bold',
 };
+
+export COLOR = {
+  DARK_GREY: '#25272A',
+  GREY: '#A7A9AA',
+  MINT: '#0DD57F'
+}

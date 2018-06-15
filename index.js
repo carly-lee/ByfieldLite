@@ -1,7 +1,7 @@
 import { AppRegistry } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
-import { SCREEN_TYPE } from 'constants';
+import { SCREEN_TYPE, COLOR } from 'constants';
 
 import Landing from 'screens/landing';
 import Entry from 'screens/entry';
@@ -21,7 +21,7 @@ Navigation.events().registerAppLaunchedListener(() => {
     topBar: {
       drawBehind: true,
       backButtonImage: require('./images/icArrowLeft.png'),
-      buttonColor: 'black',
+      buttonColor: COLOR.DARK_GREY,
       hideBackButtonTitle: true,
     }
   });
