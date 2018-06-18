@@ -10,8 +10,10 @@ export const FONT = {
   BOLD: 'FiraSans-Bold',
 };
 
-export COLOR = {
+export const COLOR = {
   DARK_GREY: '#25272A',
   GREY: '#A7A9AA',
-  MINT: '#0DD57F'
-}
+  MINT: '#0DD57F',
+  WHITE: '#FFFFFF',
+};
+

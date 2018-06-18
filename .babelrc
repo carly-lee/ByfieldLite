@@ -2,7 +2,7 @@
   "presets": ["react-native"],
   "plugins": [
     ["module-resolver", {
-      "root": ["./src"],
+      "root": ["./"],
       "extensions": [".js"],
       "alias": {
         "screens": "./src/screens",
@@ -12,7 +12,6 @@
         "components": "./src/components",
         "constants" : "./src/constants",
         "utils": "./src/utils",
-        "ui": "./src/ui",
         "images": "./images"
       }
     }]

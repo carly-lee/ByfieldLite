@@ -1,9 +1,10 @@
-
 import { Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
 const SIZE_RATIO = width / 375; // Based on iPhone 8
+const MIN_SCALE = 1;
+const MAX_SCALE = 2;
 
 export function getPixel(pt, minScale = MIN_SCALE, maxScale = MAX_SCALE) {
   return [SIZE_RATIO]
