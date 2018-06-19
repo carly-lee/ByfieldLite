@@ -1,52 +1,46 @@
 import React, { PureComponent } from 'react';
-import { TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native';
+import { TouchableOpacity, Text, View, Image, ViewPropTypes } from 'react-native';
 import { func, string } from 'prop-types';
 
-import { FONT, COLOR } from 'constants';
-import { getPixel } from 'utils';
 import { chevronRight } from 'images';
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: getPixel(100),
-    padding: getPixel(20),
-    borderRadius: getPixel(20),
-    backgroundColor: COLOR.WHITE,
-  },
-  title: {
-    fontFamily: FONT.BOLD,
-    fontSize: getPixel(20),
-  },
-  subTitle: {
-    fontFamily: FONT.REGULAR,
-    fontSize: getPixel(16),
-  },
-});
+import styles from './Card.styles';
 
 export default class Card extends PureComponent {
   static propTypes = {
     onPress: func.isRequired,
     title: string,
     subTitle: string,
+    id: string,
+    containerStyle: ViewPropTypes.style,
   }
 
   static defaultProps = {
-    text: 'title',
+    id: '',
+    title: 'title',
     subTitle: 'sub title',
+    containerStyle: {},
+  }
+
+  onPress = () => {
+    const { onPress, id } = this.props;
+    onPress(id);
   }
 
   render() {
-    const { title, subTitle, onPress } = this.props;
+    const { title, subTitle, containerStyle } = this.props;
 
     return (
-      <TouchableOpacity style={styles.container} onPress={onPress}>
-        <View>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subTitle}>{subTitle}</Text>
+      <TouchableOpacity
+        style={[styles.container, containerStyle]}
+        onPress={this.onPress}>
+        <View style={styles.shadow} />
+        <View style={styles.content}>
+          <View>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.subTitle}>{subTitle}</Text>
+          </View>
+          <Image source={chevronRight} />
         </View>
-        <Image source={{ uri: chevronRight }} />
       </TouchableOpacity>
     );
   }
