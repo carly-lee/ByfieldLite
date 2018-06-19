@@ -9,20 +9,27 @@ import Button from './Button';
 
 const styles = StyleSheet.create({
   container: {
+    paddingVertical: getPixel(8),
+    paddingHorizontal: getPixel(40),
+    borderTopLeftRadius: getPixel(15),
+    borderBottomLeftRadius: getPixel(15),
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: getPixel(12),
-    paddingHorizontal: getPixel(20),
-    borderTopLeftRadius: getPixel(20),
-    borderBottomLeftRadius: getPixel(20),
-    backgroundColor: COLOR.DARK_GREY,
+    backgroundColor: COLOR.WHITE,
+    borderColor: COLOR.DARK_GREY,
+    borderWidth: 1,
   },
   disabled: {
-    backgroundColor: COLOR.GREY,
+    backgroundColor: COLOR.DARK_GREY,
   },
   text: {
     fontFamily: FONT.MEDIUM,
-    fontSize: getPixel(16),
+    fontSize: getPixel(12),
+    color: COLOR.DARK_GREY,
+  },
+  disabledText: {
+    fontFamily: FONT.MEDIUM,
+    fontSize: getPixel(12),
     color: COLOR.WHITE,
   },
 });
@@ -32,23 +39,30 @@ export default class LeftRoundedButton extends PureComponent {
   static propTypes = {
     onPress: func.isRequired,
     text: string,
+    id: string,
     disabled: bool,
   }
 
   static defaultProps = {
     disabled: false,
     text: 'button',
+    id: '',
   }
 
   render() {
-    const { onPress, text } = this.props;
+    const {
+      onPress, text, disabled, id,
+    } = this.props;
+    const textStyle = disabled ? styles.disabledText : styles.text;
 
     return (
       <Button
         containerStyle={styles.container}
         disabledStyle={styles.disabled}
+        disabled={disabled}
+        id={id}
         onPress={onPress}>
-          <Text style={styles.text}>{text}</Text>
+          <Text style={textStyle}>{text}</Text>
       </Button>
     );
   }

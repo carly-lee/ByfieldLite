@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { TouchableOpacity, ViewPropTypes } from 'react-native';
-import { func, node, bool } from 'prop-types';
+import { func, node, bool, string } from 'prop-types';
 
 export default class Button extends PureComponent {
   static propTypes = {
@@ -9,6 +9,7 @@ export default class Button extends PureComponent {
     disabled: bool,
     containerStyle: ViewPropTypes.style,
     disabledStyle: ViewPropTypes.style,
+    id: string,
   }
 
   static defaultProps = {
@@ -17,6 +18,7 @@ export default class Button extends PureComponent {
     containerStyle: {},
     disabledStyle: {},
     onPress: () => {},
+    id: '',
   }
 
   getContainerStyle = () => {
@@ -29,13 +31,19 @@ export default class Button extends PureComponent {
   }
 
   onPressButton = () => {
-    if (this.props.disabled) return;
-    this.props.onPress();
+    const { disabled, onPress, id } = this.props;
+    if (disabled) return;
+    onPress(id);
   }
 
   render() {
+    const { disabled } = this.props;
+
     return (
-      <TouchableOpacity style={this.getContainerStyle()} onPress={this.onPressButton}>
+      <TouchableOpacity
+        style={this.getContainerStyle()}
+        onPress={this.onPressButton}
+        activeOpacity={disabled ? 1 : 0.4}>
         {this.props.children}
       </TouchableOpacity>
     );

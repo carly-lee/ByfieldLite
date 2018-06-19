@@ -8,7 +8,7 @@ import { RoundedButton } from 'components';
 import { getPixel } from 'utils';
 import styles from './styles';
 
-class Age extends PureComponent {
+export default class Age extends PureComponent {
   static get options() {
     return {
       topBar: {
@@ -21,6 +21,14 @@ class Age extends PureComponent {
     componentId: string.isRequired,
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: '',
+      isValidate: false,
+    };
+  }
+
   onPressContinue = () => {
     Navigation.push(this.props.componentId, {
       component: {
@@ -29,7 +37,16 @@ class Age extends PureComponent {
     });
   }
 
+  // https://github.com/facebook/react-native/issues/18874
+  onChangeText = (text = '') => {
+    const value = text.replace(/\D/gi, '');
+
+    this.setState({ value, isValidate: value >= 13 && value <= 120 });
+  }
+
   render() {
+    const { isValidate, value } = this.state;
+
     return (
       <KeyboardAvoidingView
         behavior="padding"
@@ -40,13 +57,14 @@ class Age extends PureComponent {
           <Text style={styles.question}>How old are you?</Text>
           <TextInput
             style={styles.input}
-            autoFocus={true}
-            keyboardType="numeric" />
-          <RoundedButton text="Continue" onPress={this.onPressContinue} />
+            underlineColorAndroid="transparent"
+            keyboardType="numeric"
+            value={value}
+            onChangeText={this.onChangeText} />
+          <RoundedButton text="Continue" disabled={!isValidate} onPress={this.onPressContinue} />
         </View>
       </KeyboardAvoidingView>
     );
   }
 }
 
-export default Age;

@@ -39,12 +39,13 @@ export default class RoundedButton extends PureComponent {
   }
 
   render() {
-    const { onPress, text } = this.props;
+    const { onPress, text, disabled } = this.props;
 
     return (
       <Button
         containerStyle={styles.container}
         disabledStyle={styles.disabled}
+        disabled={disabled}
         onPress={onPress}>
           <Text style={styles.text}>{text}</Text>
       </Button>

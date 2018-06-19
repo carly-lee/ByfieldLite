@@ -28,4 +28,7 @@ export default StyleSheet.create({
     color: COLOR.DARK_GREY,
     textAlign: 'center',
   },
+  buttonContainer: {
+    flexDirection: 'row',
+  },
 });

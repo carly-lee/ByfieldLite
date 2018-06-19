@@ -4,7 +4,7 @@ import { Navigation } from 'react-native-navigation';
 import { string } from 'prop-types';
 
 import { SCREEN_TYPE } from 'constants';
-import { RoundedButton } from 'components';
+import { RoundedButton, LeftRoundedButton, RightRoundedButton } from 'components';
 import { getPixel } from 'utils';
 import styles from './styles';
 
@@ -26,6 +26,15 @@ class Height extends PureComponent {
     type: 'weight',
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: '',
+      unit: 'FT',
+      isValidate: false,
+    };
+  }
+
   onPressContinue = () => {
     Navigation.push(this.props.componentId, {
       component: {
@@ -34,7 +43,19 @@ class Height extends PureComponent {
     });
   }
 
+  onChangeText = (text = '') => {
+    const value = text.replace(/\D/gi, '');
+
+    this.setState({ value, isValidate: value >= 125 && value <= 301 });
+  }
+
+  onToggleUnit = (id) => {
+    this.setState({ unit: id });
+  }
+
   render() {
+    const { isValidate, value, unit } = this.state;
+
     return (
       <KeyboardAvoidingView
         behavior="padding"
@@ -46,8 +67,14 @@ class Height extends PureComponent {
           <TextInput
             style={styles.input}
             autoFocus={true}
+            value={value}
+            onChangeText={this.onChangeText}
             keyboardType="numeric" />
-          <RoundedButton text="Continue" onPress={this.onPressContinue} />
+          <View style={styles.buttonContainer}>
+            <LeftRoundedButton id="FT" text="FT" disabled={unit === 'FT'} onPress={this.onToggleUnit} />
+            <RightRoundedButton id="CM" text="CM" disabled={unit === 'CM'} onPress={this.onToggleUnit} />
+          </View>
+          <RoundedButton text="Continue" disabled={!isValidate} onPress={this.onPressContinue} />
         </View>
       </KeyboardAvoidingView>
     );
