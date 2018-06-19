@@ -28,7 +28,8 @@ export default StyleSheet.create({
     fontFamily: FONT.BOLD,
     fontSize: getPixel(24),
     color: COLOR.DARK_GREY,
-    paddingVertical: getPixel(30),
+    paddingTop: getPixel(20),
+    paddingBottom: getPixel(30),
   },
   cardGap: {
     marginBottom: getPixel(20),

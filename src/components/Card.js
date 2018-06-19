@@ -10,29 +10,24 @@ export default class Card extends PureComponent {
     onPress: func.isRequired,
     title: string,
     subTitle: string,
-    id: string,
     containerStyle: ViewPropTypes.style,
   }
 
   static defaultProps = {
-    id: '',
     title: 'title',
     subTitle: 'sub title',
     containerStyle: {},
   }
 
-  onPress = () => {
-    const { onPress, id } = this.props;
-    onPress(id);
-  }
-
   render() {
-    const { title, subTitle, containerStyle } = this.props;
+    const {
+      title, subTitle, containerStyle, onPress,
+    } = this.props;
 
     return (
       <TouchableOpacity
         style={[styles.container, containerStyle]}
-        onPress={this.onPress}>
+        onPress={onPress}>
         <View style={styles.shadow} />
         <View style={styles.content}>
           <View>

@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: getPixel(12),
-    paddingHorizontal: getPixel(20),
-    borderRadius: getPixel(20),
+    paddingVertical: getPixel(14),
+    paddingHorizontal: getPixel(30),
+    borderRadius: getPixel(24),
     backgroundColor: COLOR.DARK_GREY,
   },
   disabled: {

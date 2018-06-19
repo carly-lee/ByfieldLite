@@ -21,13 +21,10 @@ class Landing extends PureComponent {
     componentId: string.isRequired,
   }
 
-  onPressCard = (id) => {
+  onPressCard = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: SCREEN_TYPE.ENTRY,
-        passProps: {
-          type: id,
-        },
+        name: SCREEN_TYPE.AGE,
       },
     });
   }
@@ -46,19 +43,16 @@ class Landing extends PureComponent {
           <Text style={styles.question}>What's your goal?</Text>
           <Card
             containerStyle={styles.cardGap}
-            id="weight"
             title="Lose weight"
             subTitle="Burn fat & get lean"
             onPress={this.onPressCard}/>
           <Card
             containerStyle={styles.cardGap}
-            id="fit"
             title="Get fitter"
             subTitle="Tone up & feel healthy"
             onPress={this.onPressCard}/>
           <Card
             containerStyle={styles.cardGap}
-            id="muscle"
             title="Gain muscle"
             subTitle="Build mass & strength"
             onPress={this.onPressCard}/>

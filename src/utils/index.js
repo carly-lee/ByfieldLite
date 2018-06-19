@@ -1,6 +1,6 @@
 import { Dimensions } from 'react-native';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const SIZE_RATIO = width / 375; // Based on iPhone 8
 const MIN_SCALE = 1;

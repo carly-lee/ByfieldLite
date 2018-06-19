@@ -1,7 +1,8 @@
 export const SCREEN_TYPE = {
   LANDING: 'screen.landing',
-  ENTRY: 'screen.entry',
   CONFIRM: 'screen.confirm',
+  AGE: 'screen.age',
+  HEIGHT: 'screen.height',
 };
 
 export const FONT = {
@@ -16,6 +17,7 @@ export const COLOR = {
   GREY: '#A7A9AA',
   LIGHT_GREY: '#EEEEEE',
   SHADOW: '#A5A4A5',
+  LINE: '#ACACAC',
   MINT: '#0DD57F',
   WHITE: '#FFFFFF',
 };
