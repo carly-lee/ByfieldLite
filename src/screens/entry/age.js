@@ -37,10 +37,8 @@ export default class Age extends PureComponent {
     });
   }
 
-  // https://github.com/facebook/react-native/issues/18874
-  onChangeText = (text = '') => {
+  onChangeText = (text) => {
     const value = text.replace(/\D/gi, '');
-
     this.setState({ value, isValidate: value >= 13 && value <= 120 });
   }
 
@@ -60,6 +58,7 @@ export default class Age extends PureComponent {
             underlineColorAndroid="transparent"
             keyboardType="numeric"
             value={value}
+            maxLength={3}
             onChangeText={this.onChangeText} />
           <RoundedButton text="Continue" disabled={!isValidate} onPress={this.onPressContinue} />
         </View>

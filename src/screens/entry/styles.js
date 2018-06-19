@@ -19,14 +19,22 @@ export default StyleSheet.create({
     fontSize: getPixel(24),
     color: COLOR.DARK_GREY,
   },
+  inputContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   input: {
     width: '100%',
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderColor: COLOR.LINE,
     fontFamily: FONT.BOLD,
     fontSize: getPixel(32),
     color: COLOR.DARK_GREY,
     textAlign: 'center',
+  },
+  halfInput: {
+    width: '46%',
   },
   buttonContainer: {
     flexDirection: 'row',

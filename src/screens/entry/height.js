@@ -53,8 +53,38 @@ class Height extends PureComponent {
     this.setState({ unit: id });
   }
 
+  getInput = () => {
+    const { unit, value } = this.state;
+    if (unit === 'FT') {
+      return (
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={[styles.input, styles.halfInput]}
+            autoFocus={true}
+            maxLength={2}
+            onChangeText={this.onChangeText}
+            keyboardType="numeric" />
+          <TextInput
+            style={[styles.input, styles.halfInput]}
+            onChangeText={this.onChangeText}
+            maxLength={2}
+            keyboardType="numeric" />
+        </View>
+      );
+    }
+    return (
+      <TextInput
+        style={styles.input}
+        autoFocus={true}
+        value={value}
+        maxLength={3}
+        onChangeText={this.onChangeText}
+        keyboardType="numeric" />
+    );
+  }
+
   render() {
-    const { isValidate, value, unit } = this.state;
+    const { isValidate, unit } = this.state;
 
     return (
       <KeyboardAvoidingView
@@ -64,12 +94,7 @@ class Height extends PureComponent {
         enabled>
         <View style={styles.content}>
           <Text style={styles.question}>How tall are you?</Text>
-          <TextInput
-            style={styles.input}
-            autoFocus={true}
-            value={value}
-            onChangeText={this.onChangeText}
-            keyboardType="numeric" />
+          {this.getInput()}
           <View style={styles.buttonContainer}>
             <LeftRoundedButton id="FT" text="FT" disabled={unit === 'FT'} onPress={this.onToggleUnit} />
             <RightRoundedButton id="CM" text="CM" disabled={unit === 'CM'} onPress={this.onToggleUnit} />
