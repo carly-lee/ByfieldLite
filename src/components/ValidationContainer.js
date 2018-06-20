@@ -8,34 +8,30 @@ export default class ValidationContainer extends PureComponent {
     style: ViewPropTypes.style,
     onSubmit: func,
     onValidation: func,
+    customValidation: func,
   }
 
   static defaultProps = {
     children: null,
     onSubmit: () => {},
     onValidation: () => {},
+    customValidation: () => {},
   }
-
-  isProcessing = false;
 
   constructor(props) {
     super(props);
     this.inputs = [];
-    this.validationState = [];
-    this.state = {
-    };
   }
 
   isValid = () => this.inputs.reduce((a, input) =>
     input.value.isValid() && a, true)
 
-  onValidation = ({ id, isValid }) => {
-    this.validationState[id] = isValid;
-    this.props.onValidation(this.validationState.reduce((a, c) => a && c, true));
+  onValidation = () => {
+    this.props.onValidation({ isValid: this.isValid() && this.props.customValidation(this.getValues()) });
   }
 
   getValues = () => this.inputs.reduce((a, input) =>
-    Object.assign({}, a, { [input.id]: input.value.getValue() }), {})
+    a.concat([{ id: input.id, value: input.value.getValue() }]), [])
 
   onSubmit = () => {
     if (this.isValid()) this.props.onSubmit();
@@ -43,7 +39,6 @@ export default class ValidationContainer extends PureComponent {
 
   registerInput = (input) => {
     this.inputs.push(input);
-    this.validationState.push({ id: input.id, isValid: false });
   }
 
   renderChildren = () => {

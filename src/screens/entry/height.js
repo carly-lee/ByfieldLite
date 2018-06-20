@@ -5,7 +5,7 @@ import { string } from 'prop-types';
 
 import { SCREEN_TYPE } from 'constants';
 import { RoundedButton, LeftRoundedButton, RightRoundedButton, ValidateNumberInput, ValidationContainer } from 'components';
-import { getPixel, Validations } from 'utils';
+import { getPixel, Validations, convertFeetToCm, convertInchToCm } from 'utils';
 import styles from './styles';
 
 class Height extends PureComponent {
@@ -32,6 +32,7 @@ class Height extends PureComponent {
       cm: '',
       ft: '',
       inch: '',
+      height: '',
       unit: 'FT',
       isValid: false,
     };
@@ -45,11 +46,13 @@ class Height extends PureComponent {
     });
   }
 
-  getCm = (type, value) => {
-    if (this.state.unit === 'FT') {
-      return value;
-    }
-    return value;
+  customValidation = (values) => {
+    const height = values.reduce((a, val) => {
+      const converted = val.id === 'ft' ? convertFeetToCm(val.value) : convertInchToCm(val.value);
+      return a + converted;
+    }, 0);
+    this.setState({ height: height.toFixed(2) });
+    return Validations.height(height);
   }
 
   onValidation = ({ isValid }) => {
@@ -58,13 +61,11 @@ class Height extends PureComponent {
 
   onChange = ({ id, text }) => {
     const value = text.replace(/\D/gi, '');
-    const converted = this.getCm(id, value);
-
-    this.setState({
-      [id]: value,
-      cm: converted,
-      isValid: converted >= 125 && converted <= 301,
-    });
+    if (id === 'cm') {
+      this.setState({ [id]: value, height: value });
+    } else {
+      this.setState({ [id]: value });
+    }
   }
 
   onToggleUnit = (id) => {
@@ -77,19 +78,22 @@ class Height extends PureComponent {
     } = this.state;
     if (unit === 'FT') {
       return (
-        <ValidationContainer style={styles.inputContainer} onValidation={this.onValidation}>
+        <ValidationContainer
+          style={styles.inputContainer}
+          customValidation={this.customValidation}
+          onValidation={this.onValidation}>
           <ValidateNumberInput
             id="ft"
             style={styles.halfInput}
             onChange={this.onChange}
-            validations={[Validations.required, Validations.height]}
+            validations={[Validations.required]}
             value={ft}
             maxLength={2} />
           <ValidateNumberInput
             id="inch"
             style={styles.halfInput}
             onChange={this.onChange}
-            validations={[Validations.required, Validations.height]}
+            validations={[Validations.required]}
             value={inch}
             autoFocus={false}
             maxLength={2} />
