@@ -22,3 +22,7 @@ export const COLOR = {
   WHITE: '#FFFFFF',
 };
 
+export const MIN_AGE = 13;
+export const MAX_AGE = 120;
+export const MIN_HEIGHT = 125;
+export const MAX_HEIGHT = 301;

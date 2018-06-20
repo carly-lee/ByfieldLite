@@ -12,3 +12,21 @@ export function getPixel(pt, minScale = MIN_SCALE, maxScale = MAX_SCALE) {
     .map(ratio => (maxScale && ratio > maxScale ? maxScale : ratio))
     .map(ratio => Math.round(pt * ratio) || 1)[0]; // should be no less than 1.
 }
+
+export function convertFeetToCM(ft = 0) {
+  return ft * 30.48;
+}
+
+export function convertInchToCM(inch = 0) {
+  return inch * 2.54;
+}
+
+export function convertCmToFeet(cm = 0) {
+  return cm * 0.032808;
+}
+
+export function convertFeetToInch(ft = 0) {
+  return ft * 12;
+}
+
+export { default as Validations } from './Validations';

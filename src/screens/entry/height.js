@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
-import { View, Text, TextInput, KeyboardAvoidingView } from 'react-native';
+import { View, Text, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { string } from 'prop-types';
 
 import { SCREEN_TYPE } from 'constants';
-import { RoundedButton, LeftRoundedButton, RightRoundedButton } from 'components';
-import { getPixel } from 'utils';
+import { RoundedButton, LeftRoundedButton, RightRoundedButton, ValidateNumberInput, ValidationContainer } from 'components';
+import { getPixel, Validations } from 'utils';
 import styles from './styles';
 
 class Height extends PureComponent {
@@ -29,9 +29,11 @@ class Height extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
+      cm: '',
+      ft: '',
+      inch: '',
       unit: 'FT',
-      isValidate: false,
+      isValid: false,
     };
   }
 
@@ -43,10 +45,26 @@ class Height extends PureComponent {
     });
   }
 
-  onChangeText = (text = '') => {
-    const value = text.replace(/\D/gi, '');
+  getCm = (type, value) => {
+    if (this.state.unit === 'FT') {
+      return value;
+    }
+    return value;
+  }
 
-    this.setState({ value, isValidate: value >= 125 && value <= 301 });
+  onValidation = ({ isValid }) => {
+    this.setState({ isValid });
+  }
+
+  onChange = ({ id, text }) => {
+    const value = text.replace(/\D/gi, '');
+    const converted = this.getCm(id, value);
+
+    this.setState({
+      [id]: value,
+      cm: converted,
+      isValid: converted >= 125 && converted <= 301,
+    });
   }
 
   onToggleUnit = (id) => {
@@ -54,37 +72,43 @@ class Height extends PureComponent {
   }
 
   getInput = () => {
-    const { unit, value } = this.state;
+    const {
+      unit, cm, ft, inch,
+    } = this.state;
     if (unit === 'FT') {
       return (
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={[styles.input, styles.halfInput]}
-            autoFocus={true}
-            maxLength={2}
-            onChangeText={this.onChangeText}
-            keyboardType="numeric" />
-          <TextInput
-            style={[styles.input, styles.halfInput]}
-            onChangeText={this.onChangeText}
-            maxLength={2}
-            keyboardType="numeric" />
-        </View>
+        <ValidationContainer style={styles.inputContainer} onValidation={this.onValidation}>
+          <ValidateNumberInput
+            id="ft"
+            style={styles.halfInput}
+            onChange={this.onChange}
+            validations={[Validations.required, Validations.height]}
+            value={ft}
+            maxLength={2} />
+          <ValidateNumberInput
+            id="inch"
+            style={styles.halfInput}
+            onChange={this.onChange}
+            validations={[Validations.required, Validations.height]}
+            value={inch}
+            autoFocus={false}
+            maxLength={2} />
+        </ValidationContainer>
       );
     }
     return (
-      <TextInput
-        style={styles.input}
-        autoFocus={true}
-        value={value}
+      <ValidateNumberInput
+        id="cm"
+        onChange={this.onChange}
+        value={cm}
         maxLength={3}
-        onChangeText={this.onChangeText}
-        keyboardType="numeric" />
+        onValidation={this.onValidation}
+        validations={[Validations.required, Validations.height]} />
     );
   }
 
   render() {
-    const { isValidate, unit } = this.state;
+    const { isValid, unit } = this.state;
 
     return (
       <KeyboardAvoidingView
@@ -99,7 +123,7 @@ class Height extends PureComponent {
             <LeftRoundedButton id="FT" text="FT" disabled={unit === 'FT'} onPress={this.onToggleUnit} />
             <RightRoundedButton id="CM" text="CM" disabled={unit === 'CM'} onPress={this.onToggleUnit} />
           </View>
-          <RoundedButton text="Continue" disabled={!isValidate} onPress={this.onPressContinue} />
+          <RoundedButton text="Continue" disabled={!isValid} onPress={this.onPressContinue} />
         </View>
       </KeyboardAvoidingView>
     );

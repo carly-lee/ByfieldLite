@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
-import { View, Text, TextInput, KeyboardAvoidingView } from 'react-native';
+import { View, Text, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { string } from 'prop-types';
 
 import { SCREEN_TYPE } from 'constants';
-import { RoundedButton } from 'components';
-import { getPixel } from 'utils';
+import { RoundedButton, ValidateNumberInput } from 'components';
+import { getPixel, Validations } from 'utils';
 import styles from './styles';
 
 export default class Age extends PureComponent {
@@ -25,7 +25,7 @@ export default class Age extends PureComponent {
     super(props);
     this.state = {
       value: '',
-      isValidate: false,
+      isValid: false,
     };
   }
 
@@ -37,13 +37,17 @@ export default class Age extends PureComponent {
     });
   }
 
-  onChangeText = (text) => {
+  onValidation = ({ isValid }) => {
+    this.setState({ isValid });
+  }
+
+  onChangeAge = ({ text }) => {
     const value = text.replace(/\D/gi, '');
-    this.setState({ value, isValidate: value >= 13 && value <= 120 });
+    this.setState({ value });
   }
 
   render() {
-    const { isValidate, value } = this.state;
+    const { isValid, value } = this.state;
 
     return (
       <KeyboardAvoidingView
@@ -53,14 +57,13 @@ export default class Age extends PureComponent {
         enabled>
         <View style={styles.content}>
           <Text style={styles.question}>How old are you?</Text>
-          <TextInput
-            style={styles.input}
-            underlineColorAndroid="transparent"
-            keyboardType="numeric"
+          <ValidateNumberInput
+            onChange={this.onChangeAge}
             value={value}
             maxLength={3}
-            onChangeText={this.onChangeText} />
-          <RoundedButton text="Continue" disabled={!isValidate} onPress={this.onPressContinue} />
+            onValidation={this.onValidation}
+            validations={[Validations.required, Validations.age]} />
+          <RoundedButton text="Continue" disabled={!isValid} onPress={this.onPressContinue} />
         </View>
       </KeyboardAvoidingView>
     );
