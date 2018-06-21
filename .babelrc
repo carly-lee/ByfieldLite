@@ -8,7 +8,7 @@
         "screens": "./src/screens",
         "actions": "./src/actions",
         "reducers": "./src/reducers",
-        "store": "./src/stores",
+        "store": "./src/store",
         "components": "./src/components",
         "constants" : "./src/constants",
         "utils": "./src/utils",

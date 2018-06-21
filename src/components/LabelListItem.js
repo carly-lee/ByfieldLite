@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import { Text, View, ViewPropTypes } from 'react-native';
-import { string } from 'prop-types';
+import { string, number, oneOfType } from 'prop-types';
 
 import styles from './LabelListItem.styles';
 
 export default class LabelListItem extends PureComponent {
   static propTypes = {
     label: string,
-    value: string,
+    value: oneOfType([string, number]),
     style: ViewPropTypes.style,
   }
 

@@ -1,24 +1,20 @@
 import React, { PureComponent } from 'react';
 import { View, Text, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { string } from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { string, func } from 'prop-types';
 
 import { SCREEN_TYPE } from 'constants';
-import { RoundedButton, ValidateNumberInput } from 'components';
+import { setAge } from 'actions';
+import { RoundedButton, ValidateNumberInput, ProgressBar } from 'components';
 import { getPixel, Validations } from 'utils';
 import styles from './styles';
 
-export default class Age extends PureComponent {
-  static get options() {
-    return {
-      topBar: {
-        noBorder: false,
-      },
-    };
-  }
-
+class Age extends PureComponent {
   static propTypes = {
     componentId: string.isRequired,
+    setAge: func.isRequired,
   }
 
   constructor(props) {
@@ -27,9 +23,16 @@ export default class Age extends PureComponent {
       value: '',
       isValid: false,
     };
+
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        visible: true,
+      },
+    });
   }
 
   onPressContinue = () => {
+    this.props.setAge(this.state.value);
     Navigation.push(this.props.componentId, {
       component: {
         name: SCREEN_TYPE.HEIGHT,
@@ -55,6 +58,7 @@ export default class Age extends PureComponent {
         keyboardVerticalOffset={getPixel(64)}
         style={styles.container}
         enabled>
+        <ProgressBar />
         <View style={styles.content}>
           <Text style={styles.question}>How old are you?</Text>
           <ValidateNumberInput
@@ -70,3 +74,7 @@ export default class Age extends PureComponent {
   }
 }
 
+export default connect(
+  null,
+  dispatch => bindActionCreators({ setAge }, dispatch),
+)(Age);

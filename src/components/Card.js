@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { TouchableOpacity, Text, View, Image, ViewPropTypes } from 'react-native';
-import { func, string } from 'prop-types';
+import { func, string, any } from 'prop-types';
 
 import { chevronRight } from 'images';
 import styles from './Card.styles';
@@ -11,23 +11,29 @@ export default class Card extends PureComponent {
     title: string,
     subTitle: string,
     containerStyle: ViewPropTypes.style,
+    data: any,
   }
 
   static defaultProps = {
     title: 'title',
     subTitle: 'sub title',
     containerStyle: {},
+    data: null,
+  }
+
+  onPress = () => {
+    this.props.onPress(this.props.data);
   }
 
   render() {
     const {
-      title, subTitle, containerStyle, onPress,
+      title, subTitle, containerStyle,
     } = this.props;
 
     return (
       <TouchableOpacity
         style={[styles.container, containerStyle]}
-        onPress={onPress}>
+        onPress={this.onPress}>
         <View style={styles.shadow} />
         <View style={styles.content}>
           <View>

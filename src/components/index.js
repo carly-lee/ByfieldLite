@@ -7,3 +7,5 @@ export { ValidateNumberInput } from './NumberInput';
 export { default as ValidationContainer } from './ValidationContainer';
 export { default as LabelListItem } from './LabelListItem';
 export { default as Panel } from './Panel';
+export { default as ProgressBar } from './ProgressBar';
+

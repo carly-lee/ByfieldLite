@@ -1,24 +1,20 @@
 import React, { PureComponent } from 'react';
 import { View, Text, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { string } from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { string, func } from 'prop-types';
 
 import { SCREEN_TYPE } from 'constants';
-import { RoundedButton, LeftRoundedButton, RightRoundedButton, ValidateNumberInput, ValidationContainer } from 'components';
+import { setHeight } from 'actions';
+import { RoundedButton, LeftRoundedButton, RightRoundedButton, ValidateNumberInput, ValidationContainer, ProgressBar } from 'components';
 import { getPixel, Validations, convertFeetToCm, convertInchToCm } from 'utils';
 import styles from './styles';
 
 class Height extends PureComponent {
-  static get options() {
-    return {
-      topBar: {
-        noBorder: false,
-      },
-    };
-  }
-
   static propTypes = {
     componentId: string.isRequired,
+    setHeight: func.isRequired,
     type: string,
   }
 
@@ -36,9 +32,16 @@ class Height extends PureComponent {
       unit: 'FT',
       isValid: false,
     };
+
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        visible: true,
+      },
+    });
   }
 
   onPressContinue = () => {
+    this.props.setHeight(this.state.height);
     Navigation.push(this.props.componentId, {
       component: {
         name: SCREEN_TYPE.CONFIRM,
@@ -120,6 +123,7 @@ class Height extends PureComponent {
         keyboardVerticalOffset={getPixel(64)}
         style={styles.container}
         enabled>
+        <ProgressBar />
         <View style={styles.content}>
           <Text style={styles.question}>How tall are you?</Text>
           {this.getInput()}
@@ -134,4 +138,7 @@ class Height extends PureComponent {
   }
 }
 
-export default Height;
+export default connect(
+  null,
+  dispatch => bindActionCreators({ setHeight }, dispatch),
+)(Height);
