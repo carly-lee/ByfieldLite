@@ -20,6 +20,7 @@ export const COLOR = {
   LINE: '#ACACAC',
   MINT: '#0DD57F',
   WHITE: '#FFFFFF',
+  VALUE: '#585A5C',
 };
 
 export const MIN_AGE = 13;
