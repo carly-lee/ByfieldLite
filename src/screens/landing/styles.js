@@ -9,7 +9,8 @@ export default StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: getPixel(20),
-    paddingVertical: getPixel(50),
+    paddingTop: getPixel(90),
+    paddingBottom: getPixel(20),
     alignItems: 'center',
   },
   backgroundImageContainer: {
@@ -34,20 +35,32 @@ export default StyleSheet.create({
   cardGap: {
     marginBottom: getPixel(20),
   },
+  logoContainer: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+  },
 
   // images
   bean: {
     position: 'absolute',
     top: getPixel(95),
   },
+  rightBackgroundImage: {
+    position: 'absolute',
+    right: 0,
+    bottom: getPixel(14),
+  },
   mat: {
     position: 'absolute',
-    bottom: getPixel(14),
+    bottom: 0,
     right: 0,
   },
   dumbbell: {
     position: 'absolute',
     right: 0,
-    bottom: getPixel(40),
+    bottom: getPixel(26),
   },
+
 });

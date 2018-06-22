@@ -3,10 +3,10 @@ import { View, Text, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { string, func } from 'prop-types';
+import { string, func, number } from 'prop-types';
 
 import { SCREEN_TYPE } from 'constants';
-import { setHeight } from 'actions';
+import { setHeight, updateProgress } from 'actions';
 import { RoundedButton, LeftRoundedButton, RightRoundedButton, ValidateNumberInput, ValidationContainer, ProgressBar } from 'components';
 import { getPixel, Validations, convertFeetToCm, convertInchToCm } from 'utils';
 import styles from './styles';
@@ -15,6 +15,8 @@ class Height extends PureComponent {
   static propTypes = {
     componentId: string.isRequired,
     setHeight: func.isRequired,
+    updateProgress: func.isRequired,
+    progress: number.isRequired,
     type: string,
   }
 
@@ -25,7 +27,6 @@ class Height extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      cm: '',
       ft: '',
       inch: '',
       height: '',
@@ -38,6 +39,10 @@ class Height extends PureComponent {
         visible: true,
       },
     });
+  }
+
+  componentDidMount() {
+    this.props.updateProgress(100);
   }
 
   onPressContinue = () => {
@@ -64,11 +69,7 @@ class Height extends PureComponent {
 
   onChange = ({ id, text }) => {
     const value = text.replace(/\D/gi, '');
-    if (id === 'cm') {
-      this.setState({ [id]: value, height: value });
-    } else {
-      this.setState({ [id]: value });
-    }
+    this.setState({ [id]: value });
   }
 
   onToggleUnit = (id) => {
@@ -77,7 +78,7 @@ class Height extends PureComponent {
 
   getInput = () => {
     const {
-      unit, cm, ft, inch,
+      unit, height, ft, inch,
     } = this.state;
     if (unit === 'FT') {
       return (
@@ -105,9 +106,9 @@ class Height extends PureComponent {
     }
     return (
       <ValidateNumberInput
-        id="cm"
+        id="height"
         onChange={this.onChange}
-        value={cm}
+        value={height}
         maxLength={3}
         onValidation={this.onValidation}
         validations={[Validations.required, Validations.height]} />
@@ -116,6 +117,7 @@ class Height extends PureComponent {
 
   render() {
     const { isValid, unit } = this.state;
+    const { progress } = this.props;
 
     return (
       <KeyboardAvoidingView
@@ -123,7 +125,7 @@ class Height extends PureComponent {
         keyboardVerticalOffset={getPixel(64)}
         style={styles.container}
         enabled>
-        <ProgressBar />
+        <ProgressBar progress={progress} />
         <View style={styles.content}>
           <Text style={styles.question}>How tall are you?</Text>
           {this.getInput()}
@@ -139,6 +141,6 @@ class Height extends PureComponent {
 }
 
 export default connect(
-  null,
-  dispatch => bindActionCreators({ setHeight }, dispatch),
+  state => ({ progress: state.progress }),
+  dispatch => bindActionCreators({ setHeight, updateProgress }, dispatch),
 )(Height);

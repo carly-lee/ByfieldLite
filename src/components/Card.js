@@ -3,6 +3,7 @@ import { TouchableOpacity, Text, View, Image, ViewPropTypes } from 'react-native
 import { func, string, any } from 'prop-types';
 
 import { chevronRight } from 'images';
+import withAnimation from './withAnimation';
 import styles from './Card.styles';
 
 export default class Card extends PureComponent {
@@ -46,3 +47,5 @@ export default class Card extends PureComponent {
     );
   }
 }
+
+export const AnimatedCard = withAnimation(Card);
