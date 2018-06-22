@@ -70,3 +70,4 @@ yarn-error.log
 .project
 org.eclipse.buildship.core.prefs
 .classpath
+main.jsbundle.meta

@@ -6,6 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
     "reset": "rm -rf node_modules/ && yarn cache clean && watchman watch-del-all && rm -rf $TMPDIR/react-* && yarn install",
     "run-ios": "react-native run-ios --simulator=\"iPhone 8\"",
+    "bundle-ios": "react-native bundle --dev=false --platform=ios --assets-dest='./ios/' --entry-file=./index.js --bundle-output=ios/main.jsbundle --sourcemap-output ios/main.jsbundle.map",
     "test": "jest"
   },
   "dependencies": {

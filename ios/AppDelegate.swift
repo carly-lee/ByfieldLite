@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
     
     let jsCodeLocation:URL = RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index", fallbackResource:nil);
+    
+//    let jsCodeLocation = Bundle.main.url(forResource: "main", withExtension: "jsbundle");
+    
     ReactNativeNavigation.bootstrap(jsCodeLocation, launchOptions: launchOptions)
 
     return true
