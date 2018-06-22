@@ -38,13 +38,11 @@ class Landing extends PureComponent {
     Animated.timing(this.state.animation, {
       toValue: 1,
       duration: 2000,
-      useNativeDriver: false,
       easing: Easing.inOut(Easing.ease),
     }).start();
   }
 
   onPressCard = (goal) => {
-    console.log('TouchableOpacity:', goal);
     this.props.setGoal(goal);
     Navigation.push(this.props.componentId, {
       component: {
