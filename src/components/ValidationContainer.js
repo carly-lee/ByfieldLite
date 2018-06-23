@@ -15,7 +15,7 @@ export default class ValidationContainer extends PureComponent {
     children: null,
     onSubmit: () => {},
     onValidation: () => {},
-    customValidation: () => {},
+    customValidation: () => true,
   }
 
   constructor(props) {

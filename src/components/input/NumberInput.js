@@ -4,7 +4,7 @@ import { func, string, number, bool } from 'prop-types';
 
 import { FONT, COLOR } from 'constants';
 import { getPixel } from 'utils';
-import withValidation from './withValidation';
+import { withValidation } from 'components';
 
 const styles = StyleSheet.create({
   container: {
