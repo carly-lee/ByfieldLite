@@ -15,9 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
     
-    let jsCodeLocation:URL = RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index", fallbackResource:nil);
-    
-//    let jsCodeLocation = Bundle.main.url(forResource: "main", withExtension: "jsbundle");
+    var jsCodeLocation:URL?
+#if DEBUG
+    jsCodeLocation = RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index", fallbackResource:nil);
+#else
+    jsCodeLocation = Bundle.main.url(forResource: "main", withExtension: "jsbundle");
+#endif
     
     ReactNativeNavigation.bootstrap(jsCodeLocation, launchOptions: launchOptions)
 
