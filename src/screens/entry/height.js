@@ -12,6 +12,14 @@ import { getPixel, Validations, convertFeetToCm, convertInchToCm } from 'utils';
 import styles from './styles';
 
 class Height extends PureComponent {
+  static get options() {
+    return {
+      topBar: {
+        visible: true,
+      },
+    };
+  }
+
   static propTypes = {
     componentId: string.isRequired,
     setHeight: func.isRequired,
@@ -33,12 +41,6 @@ class Height extends PureComponent {
       unit: 'FT',
       isValid: false,
     };
-
-    Navigation.mergeOptions(this.props.componentId, {
-      topBar: {
-        visible: true,
-      },
-    });
   }
 
   componentDidMount() {

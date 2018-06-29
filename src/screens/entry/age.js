@@ -12,6 +12,14 @@ import { getPixel, Validations } from 'utils';
 import styles from './styles';
 
 class Age extends PureComponent {
+  static get options() {
+    return {
+      topBar: {
+        visible: true,
+      },
+    };
+  }
+
   static propTypes = {
     componentId: string.isRequired,
     setAge: func.isRequired,
@@ -25,12 +33,6 @@ class Age extends PureComponent {
       value: '',
       isValid: false,
     };
-
-    Navigation.mergeOptions(this.props.componentId, {
-      topBar: {
-        visible: true,
-      },
-    });
   }
 
   componentDidMount() {
