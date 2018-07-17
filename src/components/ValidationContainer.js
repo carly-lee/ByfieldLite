@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import { View, ViewPropTypes } from 'react-native';
-import { func, element, arrayOf, oneOfType } from 'prop-types';
+import { func } from 'prop-types';
 
 export default class ValidationContainer extends PureComponent {
   static propTypes = {
-    children: oneOfType([element, arrayOf(element)]),
+    children: func.isRequired,
     style: ViewPropTypes.style,
     onSubmit: func,
     onValidation: func,
@@ -41,23 +41,15 @@ export default class ValidationContainer extends PureComponent {
     this.inputs.push(input);
   }
 
-  renderChildren = () => {
-    const { children } = this.props;
-    return React.Children.map(children, (child) => {
-      if (!child) return child;
-      return React.cloneElement(child, {
-        registerInput: this.registerInput,
-        onValidation: this.onValidation,
-      });
-    });
-  }
-
   render() {
-    const { style } = this.props;
+    const { style, children } = this.props;
 
     return (
       <View style={style}>
-        {this.renderChildren()}
+        {children({
+          registerInput: this.registerInput,
+          onValidation: this.onValidation,
+        })}
       </View>
     );
   }

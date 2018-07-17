@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { View, Text, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
@@ -88,21 +88,29 @@ class Height extends PureComponent {
           style={styles.inputContainer}
           customValidation={this.customValidation}
           onValidation={this.onValidation}>
-          <ValidateNumberInput
-            id="ft"
-            style={styles.halfInput}
-            onChange={this.onChange}
-            validations={[Validations.required]}
-            value={ft}
-            maxLength={2} />
-          <ValidateNumberInput
-            id="inch"
-            style={styles.halfInput}
-            onChange={this.onChange}
-            validations={[Validations.required]}
-            value={inch}
-            autoFocus={false}
-            maxLength={2} />
+          {({ registerInput, onValidation }) => (
+            <Fragment>
+              <ValidateNumberInput
+                id="ft"
+                style={styles.halfInput}
+                onChange={this.onChange}
+                registerInput={registerInput}
+                onValidation={onValidation}
+                validations={[Validations.required]}
+                value={ft}
+                maxLength={2} />
+              <ValidateNumberInput
+                id="inch"
+                style={styles.halfInput}
+                onChange={this.onChange}
+                registerInput={registerInput}
+                onValidation={onValidation}
+                validations={[Validations.required]}
+                value={inch}
+                autoFocus={false}
+                maxLength={2} />
+            </Fragment>
+          )}
         </ValidationContainer>
       );
     }
